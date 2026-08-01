@@ -11,6 +11,7 @@ node_modules/
 
 # Local User Data & Sensitive Credentials
 data/settings.json
+data/resumes.json
 data/uploads/*
 !data/uploads/.gitkeep
 .env

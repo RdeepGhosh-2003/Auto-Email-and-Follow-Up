@@ -171,7 +171,7 @@ print("\n" + "="*60)
 print("FIX 3 — Signature spacing & social links formatting")
 print("="*60)
 
-sig = "Best regards,\nRajdeep Ghosh\n9142488614 | grajdeep457@gmail.com"
+sig = "Best regards,\nAlex Developer\n+1234567890 | alex@example.com"
 linkedin = "https://linkedin.com/in/rajdeep"
 github   = "https://github.com/rajdeep"
 
@@ -203,7 +203,7 @@ check(
 )
 
 # No excess blank lines before social in plain text
-sig_end_idx = plain.find("grajdeep457@gmail.com") + len("grajdeep457@gmail.com")
+sig_end_idx = plain.find("alex@example.com") + len("alex@example.com")
 after_sig = plain[sig_end_idx:]
 check(
     "Plain text: no extra blank lines between sig and social links",

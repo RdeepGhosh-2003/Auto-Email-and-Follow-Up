@@ -1081,7 +1081,7 @@ Key Requirements:
                 <textarea
                   className="textarea"
                   rows={3}
-                  placeholder="Best regards,&#10;Rajdeep Ghosh&#10;9142488614 | grajdeep457@gmail.com"
+                  placeholder="Best regards,&#10;Your Name&#10;Phone | your.email@example.com"
                   value={settings.signature}
                   onChange={(e) => setSettings({ ...settings, signature: e.target.value })}
                 />

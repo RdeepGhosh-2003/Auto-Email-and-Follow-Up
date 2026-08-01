@@ -24,13 +24,13 @@ def check(label, ok, got="", expected=""):
 # ----------------------------------------------------------------
 # Build a payload using GitHub as portfolio name (the common case)
 # ----------------------------------------------------------------
-body = "Dear Hiring Manager,\n\nI am applying for the Senior Role.\nI have 5 years of experience.\n\nPlease find my resume attached.\n\nBest regards,\nRajdeep"
-sig  = "Best regards,\nRajdeep Ghosh\n9142488614 | grajdeep457@gmail.com"
+body = "Dear Hiring Manager,\n\nI am applying for the Senior Role.\nI have 5 years of experience.\n\nPlease find my resume attached.\n\nBest regards,\nAlex"
+sig  = "Best regards,\nAlex Developer\n+1234567890 | alex@example.com"
 
 plain, html = construct_email_payloads(
     body, sig,
-    linkedin_url="https://linkedin.com/in/rajdeep",
-    portfolio_url="https://github.com/rajdeep",
+    linkedin_url="https://linkedin.com/in/alex",
+    portfolio_url="https://github.com/alex",
     portfolio_name="GitHub"
 )
 
@@ -64,10 +64,10 @@ check(
 )
 
 check(
-    "Plain text contains 'GitHub: https://github.com/rajdeep'",
-    "GitHub: https://github.com/rajdeep" in plain,
+    "Plain text contains 'GitHub: https://github.com/alex'",
+    "GitHub: https://github.com/alex" in plain,
     plain[-300:],
-    "GitHub: https://github.com/rajdeep"
+    "GitHub: https://github.com/alex"
 )
 
 # ----------------------------------------------------------------
@@ -79,13 +79,13 @@ print("="*60)
 
 _, html2 = construct_email_payloads(
     body, sig,
-    linkedin_url="https://linkedin.com/in/rajdeep",
+    linkedin_url="https://linkedin.com/in/alex",
     portfolio_url="https://myblog.com",
     portfolio_name="My Blog"
 )
 plain2, _ = construct_email_payloads(
     body, sig,
-    linkedin_url="https://linkedin.com/in/rajdeep",
+    linkedin_url="https://linkedin.com/in/alex",
     portfolio_url="https://myblog.com",
     portfolio_name="My Blog"
 )
@@ -127,7 +127,7 @@ check(
 
 check(
     "Plain text has 'LinkedIn: ... | GitHub: ...' on single line",
-    "\nLinkedIn: https://linkedin.com/in/rajdeep | GitHub: https://github.com/rajdeep" in plain,
+    "\nLinkedIn: https://linkedin.com/in/alex | GitHub: https://github.com/alex" in plain,
     plain[-200:],
     "LinkedIn and GitHub on one \\n-prefixed line"
 )
