@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AutoApply AI | Cold Email & Application Automation</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    :root {
+      --bg-dark: #080c14;
+      --bg-card: rgba(15, 23, 42, 0.85);
+      --bg-card-hover: rgba(30, 41, 59, 0.9);
+      --bg-input: rgba(15, 23, 42, 0.95);
+      --border-color: rgba(255, 255, 255, 0.1);
+      --border-glow: rgba(99, 102, 241, 0.4);
+      --primary: #6366f1;
+      --primary-hover: #4f46e5;
+      --primary-glow: rgba(99, 102, 241, 0.35);
+      --secondary: #10b981;
+      --secondary-glow: rgba(16, 185, 129, 0.25);
+      --accent: #8b5cf6;
+      --amber: #f59e0b;
+      --rose: #f43f5e;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --radius-sm: 8px;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      line-height: 1.6;
+      background-image: 
+        radial-gradient(circle at 10% 10%, rgba(99, 102, 241, 0.18) 0%, transparent 35%),
+        radial-gradient(circle at 90% 90%, rgba(139, 92, 246, 0.15) 0%, transparent 35%),
+        radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.06) 0%, transparent 50%);
+      background-attachment: fixed;
+    }
+
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.6); }
+    ::-webkit-scrollbar-thumb { background: rgba(99, 102, 241, 0.4); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(99, 102, 241, 0.7); }
+
+    .app-container {
+      max-width: 95vw;
+      width: 100%;
+      margin: 0 auto;
+      padding: 24px 32px 60px;
+    }
+
+    /* Navbar Header */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 28px;
+      background: var(--bg-card);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      margin-bottom: 28px;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    }
+
+    .brand { display: flex; align-items: center; gap: 14px; }
+    .brand-icon {
+      width: 46px; height: 46px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      color: white;
+      box-shadow: 0 0 24px var(--primary-glow);
+    }
+
+    .brand-title {
+      font-size: 1.35rem; font-weight: 800; letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #ffffff 40%, #a5b4fc);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .brand-subtitle { font-size: 0.8rem; color: var(--text-muted); font-weight: 500; }
+
+    .nav-tabs {
+      display: flex; gap: 8px;
+      background: rgba(15, 23, 42, 0.8);
+      padding: 5px; border-radius: var(--radius-md);
+      border: 1px solid var(--border-color);
+    }
+
+    .nav-tab {
+      display: flex; align-items: center; gap: 8px;
+      padding: 10px 18px; border: none; background: transparent;
+      color: var(--text-muted); font-family: var(--font-sans);
+      font-size: 0.875rem; font-weight: 600; border-radius: var(--radius-sm);
+      cursor: pointer; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .nav-tab:hover { color: var(--text-main); background: rgba(255, 255, 255, 0.06); }
+    .nav-tab.active {
+      color: white;
+      background: linear-gradient(135deg, var(--primary), #4f46e5);
+      box-shadow: 0 4px 16px var(--primary-glow);
+    }
+
+    /* Main 12-column-style grid: inputs (4) | email editor (6) | ATS panel (2) */
+    .generator-grid {
+      display: grid;
+      grid-template-columns: 4fr 6fr 2fr;
+      gap: 24px;
+      align-items: start;
+      width: 100%;
+    }
+
+    @media (max-width: 1200px) {
+      .generator-grid { grid-template-columns: 1fr 1fr; }
+      .generator-grid > :last-child { grid-column: 1 / -1; }
+    }
+
+    @media (max-width: 860px) {
+      .generator-grid { grid-template-columns: 1fr; }
+      .app-container { padding: 16px 16px 40px; }
+    }
+
+    /* Glass Cards */
+    .glass-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.08);
+      transition: border-color 0.2s ease;
+    }
+
+    .glass-card:hover { border-color: rgba(99, 102, 241, 0.3); }
+
+    .card-title {
+      font-size: 1.15rem; font-weight: 700;
+      margin-bottom: 20px; display: flex; align-items: center; gap: 10px;
+      color: white;
+    }
+
+    /* Form Controls */
+    .form-group { margin-bottom: 22px; }
+
+    .form-label {
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.875rem; font-weight: 600; color: var(--text-main); margin-bottom: 8px;
+    }
+
+    .form-label-sub { font-size: 0.75rem; color: var(--text-dim); font-weight: 400; }
+
+    .input-text, .textarea, .select-input {
+      width: 100%; padding: 13px 16px;
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      color: var(--text-main); font-family: var(--font-sans); font-size: 0.9375rem;
+      outline: none; transition: all 0.2s ease;
+    }
+
+    .input-text:focus, .textarea:focus, .select-input:focus {
+      border-color: var(--border-glow);
+      box-shadow: 0 0 0 4px var(--primary-glow);
+      background: rgba(15, 23, 42, 0.98);
+    }
+
+    .textarea { resize: vertical; min-height: 125px; }
+    .textarea-mono { font-family: var(--font-mono); font-size: 0.875rem; line-height: 1.6; }
+
+    /* Dropzone Upload */
+    .dropzone {
+      border: 2px dashed rgba(99, 102, 241, 0.4);
+      background: rgba(15, 23, 42, 0.5);
+      border-radius: var(--radius-md);
+      padding: 24px 20px; text-align: center;
+      cursor: pointer; transition: all 0.25s ease;
+    }
+
+    .dropzone:hover {
+      border-color: var(--primary);
+      background: rgba(99, 102, 241, 0.1);
+      transform: translateY(-1px);
+    }
+
+    /* Tone Selection Pills */
+    .tone-pills { display: flex; gap: 10px; flex-wrap: wrap; }
+
+    .tone-pill {
+      padding: 9px 16px; border-radius: 20px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-input); color: var(--text-muted);
+      font-size: 0.8125rem; font-weight: 600; cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .tone-pill:hover { border-color: rgba(255, 255, 255, 0.25); color: var(--text-main); }
+
+    .tone-pill.active {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: white; border-color: transparent;
+      box-shadow: 0 4px 14px var(--primary-glow);
+    }
+
+    /* Filter Tabs */
+    .filter-tab {
+      padding: 4px 14px; font-size: 0.75rem; font-weight: 600;
+      border-radius: 6px; border: none; background: transparent;
+      color: var(--text-muted); cursor: pointer; transition: all 0.2s ease;
+    }
+    .filter-tab:hover { color: var(--text-main); }
+    .filter-tab.active { background: var(--primary); color: white; }
+
+    /* Buttons */
+    .btn-primary {
+      width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px;
+      padding: 15px 24px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      border: none; border-radius: var(--radius-md);
+      color: white; font-family: var(--font-sans); font-size: 1rem; font-weight: 700;
+      cursor: pointer; transition: all 0.25s ease;
+      box-shadow: 0 6px 24px var(--primary-glow);
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(99, 102, 241, 0.5);
+    }
+
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .btn-success {
+      background: linear-gradient(135deg, #10b981, #059669);
+      box-shadow: 0 6px 24px var(--secondary-glow);
+    }
+
+    .btn-success:hover:not(:disabled) {
+      box-shadow: 0 8px 30px rgba(16, 185, 129, 0.45);
+    }
+
+    .btn-secondary {
+      padding: 8px 16px; background: rgba(255, 255, 255, 0.07);
+      border: 1px solid var(--border-color); border-radius: var(--radius-sm);
+      color: var(--text-main); font-size: 0.875rem; font-weight: 600;
+      cursor: pointer; transition: all 0.2s ease;
+    }
+
+    .btn-secondary:hover { background: rgba(255, 255, 255, 0.14); }
+
+    /* ATS Score Card */
+    .ats-card {
+      display: flex; align-items: center; gap: 20px;
+      padding: 20px 24px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      margin-bottom: 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .score-circle {
+      width: 74px; height: 74px; border-radius: 50%;
+      background: radial-gradient(circle at center, rgba(16, 185, 129, 0.2), transparent);
+      border: 3px solid var(--secondary);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 1.35rem; color: var(--secondary);
+      box-shadow: 0 0 20px var(--secondary-glow); flex-shrink: 0;
+    }
+
+    .keywords-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+    .tag-match {
+      padding: 4px 10px; background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.35); color: #34d399;
+      border-radius: 14px; font-size: 0.75rem; font-weight: 600;
+    }
+
+    .tag-missing {
+      padding: 4px 10px; background: rgba(245, 158, 11, 0.14);
+      border: 1px solid rgba(245, 158, 11, 0.35); color: #fbbf24;
+      border-radius: 14px; font-size: 0.75rem; font-weight: 600;
+    }
+
+    /* Email Preview Card */
+    .email-preview-card {
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.45);
+    }
+
+    .email-header {
+      padding: 20px 24px;
+      background: rgba(30, 41, 59, 0.7);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .email-meta-row { display: flex; font-size: 0.85rem; margin-bottom: 8px; }
+    .email-meta-label { width: 75px; color: var(--text-dim); font-weight: 600; }
+    .email-meta-val { color: var(--text-main); font-weight: 500; }
+
+    .attachment-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 5px 12px; background: rgba(99, 102, 241, 0.18);
+      border: 1px solid rgba(99, 102, 241, 0.35);
+      border-radius: 8px; font-size: 0.78rem; color: #a5b4fc; font-weight: 600;
+    }
+
+    /* Toast */
+    #toast-box {
+      position: fixed; bottom: 24px; right: 24px; z-index: 999;
+    }
+
+    .toast {
+      padding: 16px 24px; border-radius: var(--radius-md);
+      background: var(--bg-card); backdrop-filter: blur(16px);
+      border: 1px solid var(--border-color); color: white; font-weight: 600;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5); display: flex; align-items: center; gap: 12px;
+      animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .toast.success { border-color: rgba(16, 185, 129, 0.5); background: rgba(6, 78, 59, 0.95); }
+    .toast.error { border-color: rgba(244, 63, 94, 0.5); background: rgba(136, 19, 55, 0.95); }
+    @keyframes slideUp { from { transform: translateY(100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(10px);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 1000; padding: 20px;
+    }
+
+    .modal-content {
+      background: #0f172a; border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg); width: 100%; max-width: 640px;
+      max-height: 90vh; overflow-y: auto; padding: 32px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+    }
+
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+    .btn-close { background: transparent; border: none; color: var(--text-muted); cursor: pointer; padding: 4px; }
+    .btn-close:hover { color: white; }
+    .spin { animation: spin 1s linear infinite; }
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <div class="app-container" id="app">
+    <!-- Navbar Header -->
+    <header class="navbar">
+      <div class="brand">
+        <div class="brand-icon"><i data-lucide="zap"></i></div>
+        <div>
+          <h1 class="brand-title">AutoApply AI</h1>
+          <p class="brand-subtitle">Cold Email & Job Application Automation</p>
+        </div>
+      </div>
+
+      <div class="nav-tabs">
+        <button class="nav-tab active" id="tab-gen-btn" onclick="switchTab('generator')">
+          <i data-lucide="sparkles"></i> Email Generator
+        </button>
+        <button class="nav-tab" id="tab-res-btn" onclick="switchTab('resumes')">
+          <i data-lucide="file-text"></i> Saved Resumes (<span id="resumes-count">0</span>)
+        </button>
+        <button class="nav-tab" id="tab-his-btn" onclick="switchTab('history')">
+          <i data-lucide="history"></i> Outreach Log (<span id="history-count">0</span>)
+        </button>
+        <button class="nav-tab" style="margin-left: 8px; border-left: 1px solid var(--border-color)" onclick="openSettingsModal()">
+          <i data-lucide="settings"></i> Settings
+        </button>
+      </div>
+    </header>
+
+    <!-- GENERATOR VIEW -->
+    <main id="view-generator">
+      <div class="generator-grid">
+        <!-- LEFT INPUT PANEL -->
+        <div class="glass-card">
+          <h2 class="card-title">
+            <i data-lucide="mail" style="color: var(--primary)"></i> Application Inputs
+          </h2>
+
+          <div class="form-group">
+            <div class="form-label">
+              <span>Receiver's Email Address</span>
+              <span class="form-label-sub">Recruiter or Hiring Manager</span>
+            </div>
+            <input type="email" id="input-receiver" class="input-text" placeholder="e.g. recruiter@company.com" />
+          </div>
+
+          <div class="form-group">
+            <div class="form-label">
+              <span>Your Resume PDF</span>
+              <span class="form-label-sub">Upload or pick preset</span>
+            </div>
+            <div id="resume-select-container" style="margin-bottom: 10px; display: none;">
+              <select id="select-resume" class="select-input" onchange="handleSelectPreset(this.value)">
+                <option value="">-- Select Saved Resume Preset --</option>
+              </select>
+            </div>
+            <div class="dropzone" id="pdf-dropzone" onclick="triggerFileInput()">
+              <i data-lucide="upload-cloud" style="width: 40px; height: 40px; color: var(--primary); margin-bottom: 8px;"></i>
+              <p id="dropzone-text" style="font-size: 0.9375rem; font-weight: 700; color: white;">Click or Drag & Drop Resume PDF</p>
+              <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 4px;">Text will be extracted & matched automatically</p>
+            </div>
+            <input type="file" id="input-pdf-file" accept=".pdf" style="display: none;" onchange="handleFileUpload(this.files[0])" />
+          </div>
+
+          <div class="form-group">
+            <div class="form-label">
+              <span>Target Job Description</span>
+              <button onclick="pasteSampleJd()" style="background: none; border: none; color: var(--primary); cursor: pointer; font-size: 0.78rem; font-weight: 700;">
+                + Paste Sample JD
+              </button>
+            </div>
+            <textarea id="input-jd" class="textarea" rows="6" placeholder="Paste the full job description text here..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <div class="form-label"><span>Communication Tone</span></div>
+            <div class="tone-pills" id="tone-pills">
+              <button class="tone-pill active" onclick="setTone('Professional', this)">💼 Professional</button>
+              <button class="tone-pill" onclick="setTone('Enthusiastic', this)">🚀 Enthusiastic</button>
+              <button class="tone-pill" onclick="setTone('Executive', this)">🏆 Executive</button>
+              <button class="tone-pill" onclick="setTone('Direct', this)">🎯 Direct</button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="form-label">
+              <span>Custom Prompt / Instructions</span>
+              <span class="form-label-sub">Optional</span>
+            </div>
+            <textarea id="input-notes" class="textarea" rows="3" placeholder="e.g., Write this in a highly aggressive sales tone, keep it under 3 sentences, and mention my background in Python."></textarea>
+          </div>
+
+          <button class="btn-primary" id="btn-generate" onclick="generateEmail()">
+            <i data-lucide="sparkles"></i> <span>Generate Tailored Email</span>
+          </button>
+        </div>
+
+        <!-- MIDDLE COLUMN (col 2): Email Preview Card -->
+        <div class="email-preview-card" style="display: flex; flex-direction: column;">
+          <div class="email-header">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+              <div style="display: flex; gap: 8px;">
+                <button id="subtab-main" class="btn-secondary" style="padding: 6px 14px; font-size: 0.8rem; background: var(--primary); border-color: var(--primary);" onclick="switchPreviewSubTab('main')">
+                  Main Email
+                </button>
+                <button id="subtab-followup" class="btn-secondary" style="padding: 6px 14px; font-size: 0.8rem;" onclick="switchPreviewSubTab('followup')">
+                  5-Day Follow-Up
+                </button>
+              </div>
+              <button onclick="copyEmailText()" style="background: none; border: none; color: var(--text-muted); cursor: pointer; display: flex; align-items: center; gap: 6px; font-size: 0.78rem; font-weight: 600;">
+                <i data-lucide="copy" style="width: 14px;"></i> Copy Text
+              </button>
+            </div>
+
+            <div class="email-meta-row">
+              <span class="email-meta-label">From:</span>
+              <span class="email-meta-val" id="meta-from">Configured Sender Email</span>
+            </div>
+            <div class="email-meta-row">
+              <span class="email-meta-label">To:</span>
+              <span class="email-meta-val" id="meta-to">[Receiver Email]</span>
+            </div>
+            <div class="email-meta-row" style="align-items: center; margin-bottom: 0;">
+              <span class="email-meta-label">Attached:</span>
+              <span class="attachment-badge"><i data-lucide="paperclip" style="width: 13px;"></i> <span id="meta-filename">Resume.pdf</span></span>
+            </div>
+          </div>
+
+          <div style="padding: 24px; flex: 1; display: flex; flex-direction: column;">
+            <div id="pane-main-email" style="flex: 1; display: flex; flex-direction: column;">
+              <div style="margin-bottom: 14px;">
+                <label style="font-size: 0.78rem; color: var(--text-dim); font-weight: 600; display: block; margin-bottom: 6px;">Subject Line:</label>
+                <input type="text" id="preview-subject" class="input-text" style="font-weight: 600;" placeholder="Generated Subject Line" />
+              </div>
+              <div style="flex: 1; display: flex; flex-direction: column;">
+                <label style="font-size: 0.78rem; color: var(--text-dim); font-weight: 600; display: block; margin-bottom: 6px;">Email Body (Editable):</label>
+                <textarea id="preview-body" class="textarea textarea-mono" style="flex: 1; min-height: 480px; resize: vertical;" placeholder="Generated cold email body will appear here..."></textarea>
+              </div>
+            </div>
+
+            <div id="pane-followup-email" style="display: none; flex: 1; flex-direction: column;">
+              <label style="font-size: 0.78rem; color: var(--text-dim); font-weight: 600; display: block; margin-bottom: 6px;">Follow-Up Email Draft (5 Days Later):</label>
+              <textarea id="preview-followup-body" class="textarea textarea-mono" style="flex: 1; min-height: 480px; resize: vertical;" placeholder="Generated follow-up draft will appear here..."></textarea>
+            </div>
+
+            <div style="margin-top: 24px;">
+              <button class="btn-primary btn-success" id="btn-send" onclick="sendEmail()">
+                <i data-lucide="send"></i> <span>Send Email to Recipient</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN (col 3): ATS Score Panel -->
+        <div>
+          <!-- ATS Score Card (shown after generation) -->
+          <div id="ats-container" style="display: none; flex-direction: column; align-items: flex-start;"
+               class="ats-card">
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 14px; width: 100%;">
+              <div class="score-circle">
+                <span id="ats-score-num">0%</span>
+                <span style="font-size: 0.55rem; color: var(--text-muted); text-transform: uppercase; text-align:center;">ATS Score</span>
+              </div>
+              <h4 style="font-size: 0.85rem; font-weight: 700; color: white; line-height: 1.4;">Keyword Match</h4>
+            </div>
+            <div style="width: 100%;">
+              <p style="font-size: 0.72rem; color: #34d399; font-weight: 700; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.04em;">✓ Matched</p>
+              <div id="matched-tags-box" class="keywords-tags"></div>
+              <p style="font-size: 0.72rem; color: #fbbf24; font-weight: 700; margin-top: 12px; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.04em;">+ Missing</p>
+              <div id="missing-tags-box" class="keywords-tags"></div>
+            </div>
+          </div>
+
+          <!-- Placeholder before generation -->
+          <div id="ats-placeholder" style="background: rgba(15,23,42,0.7); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 20px; text-align: center;">
+            <i data-lucide="bar-chart-2" style="width: 28px; height: 28px; color: var(--primary); margin-bottom: 10px;"></i>
+            <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.6;">ATS Match Score &amp; Keywords appear here after generation.</p>
+          </div>
+        </div>
+
+      </div><!-- /.generator-grid -->
+    </main>
+
+    <!-- SAVED RESUMES VIEW -->
+    <main id="view-resumes" style="display: none;">
+      <div class="glass-card">
+        <h2 class="card-title"><i data-lucide="file-text" style="color: var(--primary)"></i> Saved Resume Presets</h2>
+        <div id="resumes-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;"></div>
+      </div>
+    </main>
+
+    <!-- SENT HISTORY VIEW -->
+    <main id="view-history" style="display: none;">
+      <div class="glass-card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+          <h2 class="card-title" style="margin-bottom: 0;"><i data-lucide="history" style="color: var(--primary)"></i> Outreach Log</h2>
+          <div style="display: flex; gap: 6px; background: rgba(15,23,42,0.6); padding: 4px; border-radius: 8px; border: 1px solid var(--border-color);" id="outreach-filter-bar">
+            <button class="filter-tab active" onclick="setOutreachFilter('All', this)">All (<span id="cnt-all">0</span>)</button>
+            <button class="filter-tab" onclick="setOutreachFilter('Sent', this)">Sent (<span id="cnt-sent">0</span>)</button>
+            <button class="filter-tab" onclick="setOutreachFilter('Scheduled', this)">Scheduled (<span id="cnt-scheduled">0</span>)</button>
+            <button class="filter-tab" onclick="setOutreachFilter('Cancelled', this)">Cancelled (<span id="cnt-cancelled">0</span>)</button>
+          </div>
+        </div>
+        <div style="overflow-x: auto;">
+          <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.875rem;">
+            <thead>
+              <tr style="border-bottom: 1px solid var(--border-color); color: var(--text-muted);">
+                <th style="padding: 14px;">Date</th>
+                <th style="padding: 14px;">Recipient</th>
+                <th style="padding: 14px;">Subject</th>
+                <th style="padding: 14px;">Attachment</th>
+                <th style="padding: 14px;">Status</th>
+                <th style="padding: 14px; text-align: right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="history-table-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- SETTINGS MODAL -->
+  <div class="modal-overlay" id="settings-modal" style="display: none;" onclick="closeSettingsModal()">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <h3 style="font-size: 1.3rem; font-weight: 700; color: white; display: flex; align-items: center; gap: 10px;">
+          <i data-lucide="settings" style="color: var(--primary)"></i> SMTP & Configuration Settings
+        </h3>
+        <button class="btn-close" onclick="closeSettingsModal()"><i data-lucide="x"></i></button>
+      </div>
+
+      <form onsubmit="saveSettings(event)">
+        <h4 style="font-size: 0.9rem; font-weight: 700; color: var(--primary); margin-bottom: 14px;">1. Outgoing SMTP Server Settings (Gmail / Outlook / Custom)</h4>
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 14px;">
+          <div class="form-group">
+            <label class="form-label">SMTP Host</label>
+            <input type="text" id="cfg-host" class="input-text" placeholder="smtp.gmail.com" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Port</label>
+            <input type="number" id="cfg-port" class="input-text" placeholder="465" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">SMTP Email User</label>
+          <input type="email" id="cfg-user" class="input-text" placeholder="your.email@gmail.com" />
+        </div>
+
+        <div class="form-group">
+          <div class="form-label">
+            <span>SMTP Password / Gmail App Password</span>
+            <span class="form-label-sub">16-char App Password</span>
+          </div>
+          <input type="password" id="cfg-pass" class="input-text" placeholder="•••• •••• •••• ••••" />
+        </div>
+
+        <div style="margin-bottom: 24px;">
+          <button type="button" class="btn-secondary" onclick="verifySmtp()">⚡ Test SMTP Connection</button>
+        </div>
+
+        <h4 style="font-size: 0.9rem; font-weight: 700; color: var(--accent); margin-bottom: 14px;">2. Sender Details & Signature</h4>
+        <div class="form-group">
+          <label class="form-label">Your Name</label>
+          <input type="text" id="cfg-sender-name" class="input-text" placeholder="e.g. Rajdeep Ghosh" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Custom Email Signature</label>
+          <textarea id="cfg-signature" class="textarea" rows="3" placeholder="Best regards,&#10;Rajdeep Ghosh&#10;9142488614 | grajdeep457@gmail.com"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">LinkedIn Profile URL</label>
+          <input type="url" id="cfg-linkedin-url" class="input-text" placeholder="e.g. https://linkedin.com/in/username" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Website / Portfolio Name
+            <span class="form-label-sub">Label shown in email signature, e.g. GitHub, My Blog</span>
+          </label>
+          <input type="text" id="cfg-portfolio-name" class="input-text" placeholder="e.g. GitHub, My Blog, Portfolio" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Website / Portfolio URL</label>
+          <input type="url" id="cfg-portfolio-url" class="input-text" placeholder="e.g. https://github.com/username" />
+        </div>
+
+        <h4 style="font-size: 0.9rem; font-weight: 700; color: #34d399; margin-bottom: 14px;">3. Gemini API Key (Optional)</h4>
+        <div class="form-group">
+          <input type="password" id="cfg-gemini-key" class="input-text" placeholder="AIzaSy..." />
+        </div>
+
+        <h4 style="font-size: 0.9rem; font-weight: 700; color: #fbbf24; margin-bottom: 14px;">4. Automated Drip Campaign Settings</h4>
+        <div class="form-group" style="display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.03); padding: 12px 16px; border-radius: 10px; border: 1px solid var(--border-color); margin-bottom: 14px;">
+          <input type="checkbox" id="cfg-autofollowup-enabled" style="width: 18px; height: 18px; cursor: pointer;" />
+          <label for="cfg-autofollowup-enabled" style="cursor: pointer; font-size: 0.875rem; font-weight: 600;">
+            Enable Automated Background Drip Follow-Ups
+          </label>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+          <div class="form-group">
+            <div class="form-label">
+              <span>Gap Between Emails (Days)</span>
+              <span class="form-label-sub">Days delay between sequence steps</span>
+            </div>
+            <input type="number" id="cfg-days-gap" min="1" max="30" class="input-text" placeholder="3" />
+          </div>
+
+          <div class="form-group">
+            <div class="form-label">
+              <span>Total Follow-Up Attempts</span>
+              <span class="form-label-sub">Number of follow-up drafts</span>
+            </div>
+            <input type="number" id="cfg-max-attempts" min="1" max="10" class="input-text" placeholder="4" />
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 14px; margin-top: 28px;">
+          <button type="button" class="btn-secondary" onclick="closeSettingsModal()">Cancel</button>
+          <button type="submit" class="btn-primary" style="width: auto;">Save Settings</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast-box"></div>
+
+  <script>
+    let state = {
+      resumes: [],
+      history: [],
+      settings: {},
+      selectedTone: 'Professional',
+      selectedResumeId: null,
+      selectedFilePath: '',
+      selectedFilename: '',
+      extractedText: '',
+      subtab: 'main'
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      loadSettings();
+      loadResumes();
+      loadHistory();
+
+      document.getElementById('input-receiver').addEventListener('input', (e) => {
+        document.getElementById('meta-to').innerText = e.target.value || '[Receiver Email]';
+      });
+    });
+
+    function showToast(msg, type = 'success') {
+      const box = document.getElementById('toast-box');
+      box.innerHTML = `<div class="toast ${type === 'error' ? 'error' : 'success'}">${msg}</div>`;
+      setTimeout(() => { box.innerHTML = ''; }, 4000);
+    }
+
+    function switchTab(tab) {
+      document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
+      document.getElementById('view-generator').style.display = tab === 'generator' ? 'block' : 'none';
+      document.getElementById('view-resumes').style.display = tab === 'resumes' ? 'block' : 'none';
+      document.getElementById('view-history').style.display = tab === 'history' ? 'block' : 'none';
+
+      if (tab === 'generator') document.getElementById('tab-gen-btn').classList.add('active');
+      if (tab === 'resumes') document.getElementById('tab-res-btn').classList.add('active');
+      if (tab === 'history') document.getElementById('tab-his-btn').classList.add('active');
+    }
+
+    function switchPreviewSubTab(sub) {
+      state.subtab = sub;
+      const bMain = document.getElementById('subtab-main');
+      const bFollow = document.getElementById('subtab-followup');
+
+      bMain.style.background = sub === 'main' ? 'var(--primary)' : 'rgba(255,255,255,0.07)';
+      bMain.style.borderColor = sub === 'main' ? 'var(--primary)' : 'var(--border-color)';
+
+      bFollow.style.background = sub === 'followup' ? 'var(--accent)' : 'rgba(255,255,255,0.07)';
+      bFollow.style.borderColor = sub === 'followup' ? 'var(--accent)' : 'var(--border-color)';
+
+      document.getElementById('pane-main-email').style.display = sub === 'main' ? 'block' : 'none';
+      document.getElementById('pane-followup-email').style.display = sub === 'followup' ? 'block' : 'none';
+    }
+
+    function setTone(tone, btn) {
+      state.selectedTone = tone;
+      document.querySelectorAll('.tone-pill').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+
+    async function loadSettings() {
+      try {
+        const res = await fetch('/api/settings');
+        const data = await res.json();
+        if (data.success) {
+          state.settings = data.settings;
+          document.getElementById('cfg-host').value = data.settings.smtpHost || 'smtp.gmail.com';
+          document.getElementById('cfg-port').value = data.settings.smtpPort || 465;
+          document.getElementById('cfg-user').value = data.settings.smtpUser || '';
+          document.getElementById('cfg-pass').value = data.settings.smtpPass || '';
+          document.getElementById('cfg-sender-name').value = data.settings.senderName || '';
+          document.getElementById('cfg-signature').value = data.settings.signature || '';
+          document.getElementById('cfg-linkedin-url').value = data.settings.linkedinUrl || '';
+          document.getElementById('cfg-portfolio-name').value = data.settings.portfolioName || 'GitHub';
+          document.getElementById('cfg-portfolio-url').value = data.settings.portfolioUrl || data.settings.githubUrl || '';
+          document.getElementById('cfg-gemini-key').value = data.settings.geminiApiKey || '';
+          document.getElementById('cfg-autofollowup-enabled').checked = data.settings.autoFollowUpEnabled !== false;
+          if (document.getElementById('cfg-days-gap')) document.getElementById('cfg-days-gap').value = data.settings.daysGap || data.settings.followUpDelayDays || 3;
+          if (document.getElementById('cfg-max-attempts')) document.getElementById('cfg-max-attempts').value = data.settings.maxAttempts || 4;
+
+          document.getElementById('meta-from').innerText = data.settings.senderName || data.settings.smtpUser || 'Configured Email';
+        }
+      } catch (e) { console.error('Failed loading settings', e); }
+    }
+
+    async function loadResumes() {
+      try {
+        const res = await fetch('/api/resumes');
+        const data = await res.json();
+        if (data.success) {
+          state.resumes = data.resumes || [];
+          document.getElementById('resumes-count').innerText = state.resumes.length;
+
+          const select = document.getElementById('select-resume');
+          select.innerHTML = '<option value="">-- Choose Saved Resume --</option>';
+
+          if (state.resumes.length > 0) {
+            document.getElementById('resume-select-container').style.display = 'block';
+            state.resumes.forEach(r => {
+              select.innerHTML += `<option value="${r.id}">${r.name}</option>`;
+            });
+
+            if (!state.selectedResumeId) {
+              handleSelectPreset(state.resumes[0].id);
+              select.value = state.resumes[0].id;
+            }
+          }
+
+          const grid = document.getElementById('resumes-grid');
+          grid.innerHTML = state.resumes.map(r => `
+            <div style="background: rgba(15,23,42,0.7); border: 1px solid var(--border-color); border-radius: 14px; padding: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <h3 style="font-size: 1rem; font-weight: 700; color: white;">${r.name}</h3>
+                <button onclick="deleteResume('${r.id}')" style="background: none; border: none; color: var(--rose); cursor: pointer;"><i data-lucide="trash-2" style="width:16px;"></i></button>
+              </div>
+              <p style="font-size: 0.75rem; color: var(--text-dim); margin-bottom: 10px;">Uploaded: ${new Date(r.uploadedAt).toLocaleDateString()}</p>
+              <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5;">${r.text.slice(0, 160)}...</p>
+            </div>
+          `).join('');
+          lucide.createIcons();
+        }
+      } catch (e) { console.error('Failed loading resumes', e); }
+    }
+
+    function setOutreachFilter(filter, el) {
+      state.historyFilter = filter;
+      document.querySelectorAll('#outreach-filter-bar .filter-tab').forEach(b => b.classList.remove('active'));
+      if (el) el.classList.add('active');
+      renderHistoryTable();
+    }
+
+    async function loadHistory() {
+      try {
+        const res = await fetch('/api/history');
+        const data = await res.json();
+        if (data.success) {
+          state.history = data.history || [];
+          document.getElementById('history-count').innerText = state.history.length;
+
+          // Update filter badge counts
+          const cntAll = state.history.length;
+          const cntSent = state.history.filter(i => i.followUpStatus === 'Sent' || !i.followUpStatus || i.followUpStatus === 'None').length;
+          const cntSched = state.history.filter(i => i.followUpStatus === 'Pending').length;
+          const cntCanc = state.history.filter(i => i.followUpStatus === 'Cancelled').length;
+
+          if (document.getElementById('cnt-all')) document.getElementById('cnt-all').innerText = cntAll;
+          if (document.getElementById('cnt-sent')) document.getElementById('cnt-sent').innerText = cntSent;
+          if (document.getElementById('cnt-scheduled')) document.getElementById('cnt-scheduled').innerText = cntSched;
+          if (document.getElementById('cnt-cancelled')) document.getElementById('cnt-cancelled').innerText = cntCanc;
+
+          renderHistoryTable();
+        }
+      } catch (e) { console.error('Failed loading history', e); }
+    }
+
+    function renderHistoryTable() {
+      const filter = state.historyFilter || 'All';
+      const items = state.history.filter(item => {
+        if (filter === 'All') return true;
+        if (filter === 'Sent') return item.followUpStatus === 'Sent' || !item.followUpStatus || item.followUpStatus === 'None';
+        if (filter === 'Scheduled') return item.followUpStatus === 'Pending';
+        if (filter === 'Cancelled') return item.followUpStatus === 'Cancelled';
+        return true;
+      });
+
+      const tbody = document.getElementById('history-table-body');
+      tbody.innerHTML = items.map(item => {
+        let statusHtml = '';
+        if (item.followUpStatus === 'Pending') {
+          statusHtml = `<span style="padding: 3px 10px; border-radius: 12px; background: rgba(245,158,11,0.15); color: #fbbf24; font-size: 0.75rem; font-weight: 600; white-space: nowrap;">⏳ Scheduled (Attempt ${(item.currentAttempt || 0) + 1} of ${item.maxAttempts || 4})</span>`;
+        } else if (item.followUpStatus === 'Cancelled') {
+          statusHtml = `<span style="padding: 3px 10px; border-radius: 12px; background: rgba(244,63,94,0.15); color: #f43f5e; font-size: 0.75rem; font-weight: 600;">Cancelled</span>`;
+        } else {
+          statusHtml = `<span style="padding: 3px 10px; border-radius: 12px; background: rgba(16,185,129,0.15); color: #34d399; font-size: 0.75rem; font-weight: 600;">✓ Sent</span>`;
+        }
+
+        let actionsHtml = '';
+        if (item.followUpStatus === 'Pending') {
+          actionsHtml = `
+            <button onclick="sendFollowUpNow('${item.id}')" style="background: var(--primary); color: white; border: none; border-radius: 6px; padding: 4px 8px; font-size: 0.75rem; cursor: pointer; font-weight: 600; margin-right: 8px;" title="Send Follow-Up Immediately">⚡ Send Now</button>
+            <button onclick="cancelFollowUp('${item.id}')" style="background: rgba(244,63,94,0.2); color: #f43f5e; border: 1px solid rgba(244,63,94,0.3); border-radius: 6px; padding: 4px 8px; font-size: 0.75rem; cursor: pointer; margin-right: 12px;" title="Cancel Scheduled Follow-Up">Cancel</button>`;
+        }
+        actionsHtml += `
+          <button onclick="deleteHistory('${item.id}')" style="background: none; border: none; color: var(--rose); cursor: pointer;" title="Delete Record"><i data-lucide="trash-2" style="width:16px;"></i></button>`;
+
+        return `
+        <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+          <td style="padding: 14px; color: var(--text-dim);">${new Date(item.sentAt).toLocaleDateString()}</td>
+          <td style="padding: 14px; font-weight: 600; color: white;">${item.receiverEmail}</td>
+          <td style="padding: 14px; color: var(--text-main);">${item.subject}</td>
+          <td style="padding: 14px;"><span class="attachment-badge">${item.resumeAttached}</span></td>
+          <td style="padding: 14px;">${statusHtml}</td>
+          <td style="padding: 14px; text-align: right; white-space: nowrap;">${actionsHtml}</td>
+        </tr>`;
+      }).join('');
+      lucide.createIcons();
+    }
+
+    function handleSelectPreset(id) {
+      state.selectedResumeId = id;
+      const found = state.resumes.find(r => r.id === id);
+      if (found) {
+        state.extractedText = found.text;
+        state.selectedFilePath = found.filePath;
+        state.selectedFilename = found.filename;
+        document.getElementById('dropzone-text').innerText = `Selected: ${found.filename}`;
+        document.getElementById('meta-filename').innerText = found.filename;
+      }
+    }
+
+    function triggerFileInput() {
+      document.getElementById('input-pdf-file').click();
+    }
+
+    async function handleFileUpload(file) {
+      if (!file) return;
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('profileName', file.name.replace('.pdf', ''));
+
+      showToast('Extracting PDF text...', 'info');
+      try {
+        const res = await fetch('/api/parse-pdf', { method: 'POST', body: formData });
+        const data = await res.json();
+        if (data.success) {
+          state.extractedText = data.text;
+          state.selectedFilePath = data.resume.filePath;
+          state.selectedFilename = data.resume.filename;
+          state.selectedResumeId = data.resume.id;
+
+          document.getElementById('dropzone-text').innerText = `Selected: ${data.resume.filename}`;
+          document.getElementById('meta-filename').innerText = data.resume.filename;
+          showToast('Resume PDF extracted successfully!');
+          loadResumes();
+        } else {
+          showToast('PDF parse failed', 'error');
+        }
+      } catch (err) { showToast(`PDF upload error: ${err.message}`, 'error'); }
+    }
+
+    async function generateEmail() {
+      const jd = document.getElementById('input-jd').value.trim();
+
+      if (!state.extractedText) { return showToast('Please select or upload a Resume PDF.', 'error'); }
+      if (!jd) { return showToast('Please paste the Job Description.', 'error'); }
+
+      const btn = document.getElementById('btn-generate');
+      btn.disabled = true;
+      btn.innerHTML = `<i data-lucide="rotate-ccw" class="spin"></i> Generating Email...`;
+      lucide.createIcons();
+
+      try {
+        const res = await fetch('/api/generate-email', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            resumeText: state.extractedText,
+            jobDescription: jd,
+            tone: state.selectedTone,
+            customNotes: document.getElementById('input-notes').value,
+            senderName: state.settings.senderName
+          })
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          // Fix 2 (Hardened JS Sanitizer): normalize line endings, protect paragraph breaks,
+          // then collapse all remaining single \n into a space.
+          // Uses a placeholder approach instead of lookbehind for maximum browser compatibility.
+          const cleanText = (raw) => {
+            if (!raw) return '';
+            // Step 1: normalize \r\n and \r to \n
+            let s = raw.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+            // Step 2: replace \n\n (paragraph breaks) with a placeholder token
+            s = s.replace(/\n\n+/g, '\x00PARA\x00');
+            // Step 3: all remaining lone \n are soft-wraps — collapse them to a space
+            s = s.replace(/\n/g, ' ');
+            // Step 4: remove double spaces caused by the collapse
+            s = s.replace(/ {2,}/g, ' ');
+            // Step 5: restore paragraph breaks as exactly \n\n
+            s = s.replace(/\x00PARA\x00/g, '\n\n');
+            return s.trim();
+          };
+
+          document.getElementById('preview-subject').value = data.subject;
+          document.getElementById('preview-body').value = cleanText(data.body);
+          document.getElementById('preview-followup-body').value = cleanText(data.followUp);
+
+          document.getElementById('ats-container').style.display = 'flex';
+          document.getElementById('ats-placeholder').style.display = 'none';
+          document.getElementById('ats-score-num').innerText = `${data.atsAnalysis.score}%`;
+          document.getElementById('matched-tags-box').innerHTML = data.atsAnalysis.matched.map(m => `<span class="tag-match">✓ ${m}</span>`).join('');
+          document.getElementById('missing-tags-box').innerHTML = data.atsAnalysis.missing.map(m => `<span class="tag-missing">+ ${m}</span>`).join('');
+
+          showToast('Tailored email generated successfully!');
+        } else {
+          showToast(data.detail || 'Generation failed.', 'error');
+        }
+      } catch (err) {
+        showToast(`Error: ${err.message}`, 'error');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = `<i data-lucide="sparkles"></i> <span>Generate Tailored Email</span>`;
+        lucide.createIcons();
+      }
+    }
+
+    async function sendEmail() {
+      const receiver = document.getElementById('input-receiver').value.trim();
+      const subject = document.getElementById('preview-subject').value.trim();
+      const body = document.getElementById('preview-body').value.trim();
+      const followUpBody = document.getElementById('preview-followup-body').value.trim();
+
+      if (!receiver) { return showToast('Please enter Recipient Email.', 'error'); }
+      if (!subject || !body) { return showToast('Please generate an email first.', 'error'); }
+
+      const btn = document.getElementById('btn-send');
+      btn.disabled = true;
+      btn.innerHTML = `<i data-lucide="rotate-ccw" class="spin"></i> Sending Email...`;
+      lucide.createIcons();
+
+      try {
+        const res = await fetch('/api/send-email', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            receiverEmail: receiver,
+            subject,
+            body,
+            followUpBody,
+            resumeFilePath: state.selectedFilePath,
+            resumeFilename: state.selectedFilename
+          })
+        });
+        const data = await res.json();
+        if (data.success) {
+          showToast(`Email sent to ${receiver}!`, 'success');
+          loadHistory();
+        } else {
+          showToast(data.detail || 'Send failed', 'error');
+        }
+      } catch (err) {
+        showToast(`Send error: ${err.message}`, 'error');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = `<i data-lucide="send"></i> <span>Send Email to Recipient</span>`;
+        lucide.createIcons();
+      }
+    }
+
+    async function sendFollowUpNow(id) {
+      showToast('Sending follow-up email...', 'info');
+      try {
+        const res = await fetch(`/api/history/${id}/send-followup`, { method: 'POST' });
+        const data = await res.json();
+        if (data.success) {
+          showToast(data.message || 'Follow-up email dispatched!');
+          loadHistory();
+        } else {
+          showToast(data.detail || 'Follow-up failed', 'error');
+        }
+      } catch (err) { showToast(`Error: ${err.message}`, 'error'); }
+    }
+
+    async function cancelFollowUp(id) {
+      try {
+        const res = await fetch(`/api/history/${id}/cancel-followup`, { method: 'POST' });
+        const data = await res.json();
+        if (data.success) {
+          showToast('Follow-up cancelled.');
+          loadHistory();
+        } else {
+          showToast(data.detail || 'Cancel failed', 'error');
+        }
+      } catch (err) { showToast(`Error: ${err.message}`, 'error'); }
+    }
+
+    function openSettingsModal() { document.getElementById('settings-modal').style.display = 'flex'; }
+    function closeSettingsModal() { document.getElementById('settings-modal').style.display = 'none'; }
+
+    async function saveSettings(e) {
+      e.preventDefault();
+      const daysGapVal = Number(document.getElementById('cfg-days-gap').value) || 3;
+      const maxAttemptsVal = Number(document.getElementById('cfg-max-attempts').value) || 4;
+      const newCfg = {
+        smtpHost: document.getElementById('cfg-host').value,
+        smtpPort: Number(document.getElementById('cfg-port').value) || 465,
+        smtpSecure: true,
+        smtpUser: document.getElementById('cfg-user').value,
+        smtpPass: document.getElementById('cfg-pass').value,
+        senderName: document.getElementById('cfg-sender-name').value,
+        signature: document.getElementById('cfg-signature').value,
+        linkedinUrl: document.getElementById('cfg-linkedin-url').value,
+        portfolioName: document.getElementById('cfg-portfolio-name').value,
+        portfolioUrl: document.getElementById('cfg-portfolio-url').value,
+        geminiApiKey: document.getElementById('cfg-gemini-key').value,
+        autoFollowUpEnabled: document.getElementById('cfg-autofollowup-enabled').checked,
+        followUpDelayDays: daysGapVal,
+        daysGap: daysGapVal,
+        maxAttempts: maxAttemptsVal
+      };
+
+      const res = await fetch('/api/settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newCfg)
+      });
+      const data = await res.json();
+      if (data.success) {
+        showToast('Settings saved successfully!');
+        closeSettingsModal();
+        loadSettings();
+      }
+    }
+
+    async function verifySmtp() {
+      const cfg = {
+        smtpHost: document.getElementById('cfg-host').value,
+        smtpPort: Number(document.getElementById('cfg-port').value) || 465,
+        smtpSecure: true,
+        smtpUser: document.getElementById('cfg-user').value,
+        smtpPass: document.getElementById('cfg-pass').value
+      };
+
+      showToast('Testing SMTP connection...', 'info');
+      const res = await fetch('/api/settings/verify-smtp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(cfg)
+      });
+      const data = await res.json();
+      if (data.success) { showToast('SMTP connection verified successfully!'); }
+      else { showToast(data.detail || 'SMTP test failed', 'error'); }
+    }
+
+    async function deleteResume(id) {
+      await fetch(`/api/resumes/${id}`, { method: 'DELETE' });
+      showToast('Resume deleted');
+      loadResumes();
+    }
+
+    async function deleteHistory(id) {
+      await fetch(`/api/history/${id}`, { method: 'DELETE' });
+      showToast('Item deleted');
+      loadHistory();
+    }
+
+    function copyEmailText() {
+      const txt = state.subtab === 'main' 
+        ? `${document.getElementById('preview-subject').value}\n\n${document.getElementById('preview-body').value}`
+        : document.getElementById('preview-followup-body').value;
+      navigator.clipboard.writeText(txt);
+      showToast('Copied text to clipboard!');
+    }
+
+    function pasteSampleJd() {
+      document.getElementById('input-jd').value = 
+`Senior Full Stack Engineer
+Company: TechFlow Innovations
+Location: Remote
+
+About the Role:
+We are looking for a Senior Full Stack Engineer experienced in React, Node.js, Python, REST APIs, and Cloud Infrastructure. You will build scalable web applications and lead feature development.
+
+Requirements:
+• 4+ years experience with React, JavaScript, Python.
+• Strong backend skills in RESTful APIs and databases.
+• Experience with Git workflows and CI/CD pipelines.
+• Excellent communication skills and agile teamwork.`;
+    }
+  </script>
+</body>
+</html>

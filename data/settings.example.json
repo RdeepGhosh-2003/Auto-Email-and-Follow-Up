@@ -1,0 +1,15 @@
+{
+  "smtpHost": "smtp.gmail.com",
+  "smtpPort": 465,
+  "smtpSecure": true,
+  "smtpUser": "your.email@gmail.com",
+  "smtpPass": "your-16-char-app-password",
+  "senderName": "Your Name",
+  "signature": "Best regards,\nYour Name\nPhone | Email",
+  "linkedinUrl": "https://linkedin.com/in/username",
+  "githubUrl": "https://github.com/username",
+  "geminiApiKey": "",
+  "autoFollowUpEnabled": true,
+  "daysGap": 3,
+  "maxAttempts": 4
+}

@@ -1,0 +1,27 @@
+# Environment & Virtualenvs
+.venv/
+venv/
+ENV/
+env/
+__pycache__/
+*.pyc
+
+# Dependencies
+node_modules/
+
+# Local User Data & Sensitive Credentials
+data/settings.json
+data/uploads/*
+!data/uploads/.gitkeep
+.env
+.env.local
+
+# Logs & Temporary Files
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS Generated Files
+.DS_Store
+Thumbs.db
