@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AutoApply AI</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="ext-popup-container">
+    <header class="ext-header">
+      <div class="ext-brand">
+        <span class="ext-logo">⚡</span>
+        <div class="ext-title-box">
+          <h1 class="ext-title">AutoApply AI</h1>
+          <span class="ext-subtitle">v2.1.0 • Cold Email & Drip Engine</span>
+        </div>
+      </div>
+      <button id="btn-open-dashboard-header" class="btn-icon" title="Open Full Dashboard">⚙️</button>
+    </header>
+
+    <div id="server-status-bar" class="status-bar offline">
+      <span class="status-dot"></span>
+      <span id="status-text">Checking Local Server (http://127.0.0.1:3000)...</span>
+    </div>
+
+    <div class="ext-body">
+      <div class="action-card">
+        <h3 class="card-title">🎯 Active Tab Quick Capture</h3>
+        <p class="card-desc">Automatically extract Job Description text from your active browser tab.</p>
+        <button id="btn-extract-tab" class="btn-primary">
+          <span>⚡ Extract JD from Page</span>
+        </button>
+      </div>
+
+      <div class="form-group" style="margin-top: 12px;">
+        <label class="form-label">Recipient Email</label>
+        <input type="email" id="ext-receiver-email" class="input-text" placeholder="recruiter@company.com" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Job Description</label>
+        <textarea id="ext-job-description" class="textarea" rows="4" placeholder="Paste or extract Job Description here..."></textarea>
+      </div>
+
+      <div style="display: flex; gap: 8px; margin-top: 12px;">
+        <button id="btn-quick-generate" class="btn-primary" style="flex: 1;">
+          <span>✨ Generate & Preview</span>
+        </button>
+        <button id="btn-open-dashboard" class="btn-secondary" style="flex: 1;">
+          <span>🖥️ Open Dashboard</span>
+        </button>
+      </div>
+    </div>
+
+    <footer class="ext-footer">
+      <span>AutoApply AI • Local Server Managed</span>
+      <a href="#" id="link-open-options">Options</a>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

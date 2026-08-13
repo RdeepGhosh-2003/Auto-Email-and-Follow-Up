@@ -8,6 +8,7 @@ echo =======================================================
 echo.
 
 cd /d "%~dp0"
+set PYTHONDONTWRITEBYTECODE=1
 
 :: Check for virtual environment
 if not exist ".venv\Scripts\python.exe" (

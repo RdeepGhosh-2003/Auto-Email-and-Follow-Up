@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "AutoApply AI - Cold Email & Drip Campaign Engine",
+  "version": "2.1.0",
+  "description": "Generate AI cold emails, analyze ATS match scores, and manage automated drip campaigns directly from your Chrome browser.",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "scripting"
+  ],
+  "host_permissions": [
+    "http://127.0.0.1:3000/*",
+    "http://localhost:3000/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "AutoApply AI"
+  },
+  "options_page": "static/index.html",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
