@@ -1,9 +1,9 @@
 @echo off
-title AutoApply AI Launcher
+title Auto Email and Follow-Up Launcher
 color 0A
 cls
 echo =======================================================
-echo          🚀 AutoApply AI - Starting Server...
+echo     🚀 Auto Email and Follow-Up - Starting Server...
 echo =======================================================
 echo.
 

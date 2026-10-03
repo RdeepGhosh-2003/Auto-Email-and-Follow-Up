@@ -1,11 +1,11 @@
-# 🚀 AutoApply AI - Automated Job Application & Drip Campaign Engine
+# 🚀 Auto Email and Follow-Up - Automated Job Application & Drip Campaign Engine
 
 [![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-brightgreen.svg)](https://python.org)
 [![Node.js](https://img.shields.io/badge/Node.js-18%2B-green.svg)](https://nodejs.org)
 
-**AutoApply AI** is an intelligent, privacy-first local desktop application designed to supercharge your job search. It automates resume skill extraction, calculates an **ATS Match Score (%)**, generates tailored cold emails via **Gemini 2.5**, and runs automated, multi-stage **Drip Campaign Sequences** locally on your machine.
+**Auto Email and Follow-Up** is an intelligent, privacy-first local desktop application designed to supercharge your job search. It automates resume skill extraction, calculates an **ATS Match Score (%)**, generates tailored cold emails via **Gemini 2.5**, and runs automated, multi-stage **Drip Campaign Sequences** locally on your machine.
 
 ---
 
@@ -54,8 +54,8 @@ job-email-automation/
 
 1. Clone or download this repository:
    ```bash
-   git clone https://github.com/your-username/autoapply-ai.git
-   cd autoapply-ai
+   git clone https://github.com/RdeepGhosh-2003/Auto-Email-and-Follow-Up.git
+   cd Auto-Email-and-Follow-Up
    ```
 2. Double-click **`run.bat`**.
 3. The launcher automatically configures virtual environment dependencies and opens your browser at:

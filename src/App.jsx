@@ -400,7 +400,7 @@ Key Requirements:
             <Zap size={24} />
           </div>
           <div>
-            <h1 className="brand-title">AutoApply AI</h1>
+            <h1 className="brand-title">Auto Email and Follow-Up</h1>
             <p className="brand-subtitle">Cold Email & Job Application Automation</p>
           </div>
         </div>

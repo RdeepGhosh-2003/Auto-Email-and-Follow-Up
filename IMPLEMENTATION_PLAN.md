@@ -1,4 +1,4 @@
-# Implementation Plan - Job Application Cold Email Automation System (AutoApply AI)
+# Implementation Plan - Job Application Cold Email Automation System (Auto Email and Follow-Up)
 
 Build a full-stack, local web application that allows users to upload/manage resume PDFs, paste a target Job Description (or job link), calculate ATS Match Score & Keyword Gaps, generate AI-tailored cover emails, live preview & edit drafts in-app, and dispatch emails with attachments via SMTP directly to the target recipient.
 

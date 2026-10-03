@@ -5,6 +5,9 @@ Run: .venv\\Scripts\\python.exe test_payload.py
 import re
 import sys
 
+if hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(encoding='utf-8')
+
 # -----------------------------------------------------------------------
 # Inline the fixed functions (same code as in app.py) so we can test
 # without needing the full FastAPI stack running.
@@ -80,8 +83,8 @@ def deduplicate_keywords(raw_matched):
 # TESTS
 # -----------------------------------------------------------------------
 
-PASS = "\033[92m✓ PASS\033[0m"
-FAIL = "\033[91m✗ FAIL\033[0m"
+PASS = "[PASS]"
+FAIL = "[FAIL]"
 errors = 0
 
 def check(label, condition, got, expected_desc=""):
@@ -95,7 +98,7 @@ def check(label, condition, got, expected_desc=""):
         errors += 1
 
 print("\n" + "="*60)
-print("FIX 1 — Random line-break conversion")
+print("FIX 1 - Random line-break conversion")
 print("="*60)
 
 body = (
@@ -110,13 +113,13 @@ html = _body_to_html(body)
 
 # Single \n inside a paragraph must NOT produce <br> between
 # consecutive soft-wrapped sentences within same paragraph.
-# In our implementation single \n → space, so we check the joined output
+# In our implementation single \n -> space, so we check the joined output
 # contains the two sentences on the same line.
-first_para_html = html.split("<br><br>")[0]  # just the first paragraph
+body_para_html = html.split("<br><br>")[1]  # the paragraph with soft wrap
 check(
-    "Single \\n inside paragraph → space, not <br>",
-    "<br>" not in first_para_html and "role. I have" in first_para_html,
-    first_para_html,
+    "Single \\n inside paragraph -> space, not <br>",
+    "<br>" not in body_para_html and "role. I have" in body_para_html,
+    body_para_html,
     "no <br> and 'role. I have' joined in same paragraph"
 )
 

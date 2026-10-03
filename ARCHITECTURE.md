@@ -1,6 +1,6 @@
-# AutoApply AI - System Architecture & Technical Specifications
+# Auto Email and Follow-Up - System Architecture & Technical Specifications
 
-This document outlines the architecture, data schemas, background worker lifecycle, and REST API specification for **AutoApply AI v2.0.0**.
+This document outlines the architecture, data schemas, background worker lifecycle, and REST API specification for **Auto Email and Follow-Up v2.0.0**.
 
 ---
 

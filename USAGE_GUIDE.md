@@ -1,6 +1,6 @@
-# AutoApply AI - User & Setup Guide
+# Auto Email and Follow-Up - User & Setup Guide
 
-This guide provides step-by-step instructions on setting up, configuring, and using **AutoApply AI** for cold email job outreach and automated drip campaigns.
+This guide provides step-by-step instructions on setting up, configuring, and using **Auto Email and Follow-Up** for cold email job outreach and automated drip campaigns.
 
 ---
 

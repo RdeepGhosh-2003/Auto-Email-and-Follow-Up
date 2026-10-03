@@ -16,7 +16,7 @@ from pydantic import BaseModel
 import pypdf
 import requests
 
-app = FastAPI(title="AutoApply AI - Job Application Email Automation")
+app = FastAPI(title="Auto Email and Follow-Up - Job Application Email Automation")
 
 app.add_middleware(
     CORSMiddleware,

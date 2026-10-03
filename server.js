@@ -617,5 +617,5 @@ app.delete('/api/history/:id', (req, res) => {
 
 // Start Express Server
 app.listen(PORT, () => {
-  console.log(`🚀 AutoApply Backend Server running on http://localhost:${PORT}`);
+  console.log(`🚀 Auto Email and Follow-Up Backend Server running on http://localhost:${PORT}`);
 });

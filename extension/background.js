@@ -1,4 +1,4 @@
-// Background Service Worker for AutoApply AI Chrome Extension
+// Background Service Worker for Auto Email and Follow-Up Chrome Extension
 chrome.runtime.onInstalled.addListener(() => {
-  console.log('[AutoApply AI] Chrome Extension installed successfully.');
+  console.log('[Auto Email and Follow-Up] Chrome Extension installed successfully.');
 });
