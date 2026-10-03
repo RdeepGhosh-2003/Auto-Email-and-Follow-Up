@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Auto Email and Follow-Up - Cold Email & Drip Campaign Engine",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Generate AI cold emails, analyze ATS match scores, and manage automated drip campaigns directly from your Chrome browser.",
   "permissions": [
     "activeTab",

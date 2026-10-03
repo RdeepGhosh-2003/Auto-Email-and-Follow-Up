@@ -1,6 +1,6 @@
 # 🚀 Auto Email and Follow-Up - Automated Job Application & Drip Campaign Engine
 
-[![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-2.1.1-blue.svg)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-brightgreen.svg)](https://python.org)
 [![Node.js](https://img.shields.io/badge/Node.js-18%2B-green.svg)](https://nodejs.org)
@@ -9,7 +9,7 @@
 
 ---
 
-## ✨ Key Features (v2.0.0)
+## ✨ Key Features (v2.1.1)
 
 - 🤖 **Gemini 2.5 Structured AI Generator**: Crafts highly personalized cold emails and multi-draft follow-up sequences formatted as structured JSON.
 - 📬 **Multi-Stage AI Drip Campaign Engine**: Automatically plans and dispatches sequence follow-ups with tone progression across attempts (Attempt 1: Gentle bump, Attempt 2: Value add, Attempt 3: Timeline check, Attempt 4: Polite wrap-up).

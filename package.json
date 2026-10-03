@@ -1,6 +1,6 @@
 {
-  "name": "job-email-automation",
-  "version": "1.0.0",
+  "name": "auto-email-and-follow-up",
+  "version": "2.1.1",
   "private": true,
   "type": "module",
   "scripts": {

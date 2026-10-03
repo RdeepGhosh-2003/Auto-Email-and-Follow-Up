@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.1.1] - 2026-10-03
+
+### 🔄 Changed
+- **Rebranded Application**: Renamed from *AutoApply AI* to **Auto Email and Follow-Up** across all UI templates, backend servers, Windows batch launcher, documentation, and extension manifests.
+- **Test Suite Modernization**: Enhanced `test_payload.py` with UTF-8 stdout reconfiguration and updated paragraph parsing for Windows terminal compatibility.
+
+---
+
+## [2.1.0] - 2026-08-13
+
+### 🚀 Added
+- **Native Manifest V3 Chrome Extension**:
+  - One-click text extraction from active job board tabs (LinkedIn, Indeed, etc.).
+  - Local server health monitor and direct deep link into the desktop dashboard.
+  - Dedicated `extension/` subfolder structure.
+
+---
+
 ## [2.0.0] - 2026-08-01
 
 ### 🚀 Added
